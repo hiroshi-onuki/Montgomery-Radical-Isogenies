@@ -1,7 +1,7 @@
-load "crad_512_new.m";
+load "rad_mont.m";
 print("");
 
-N := 100;
+N := 10000;
 private := [cradical_private_keygen() : i in [1..N]];
 
 print("The original version.");
