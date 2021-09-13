@@ -1,7 +1,7 @@
 load "rad_mont.m";
 print("");
 
-N := 10000;
+N := 1000;
 private := [cradical_private_keygen() : i in [1..N]];
 
 print("The original version.");
@@ -12,18 +12,18 @@ for i := 1 to N do
 end for;
 printf "The time of generating a public key : %o\n\n", Cputime(t);
 
-print("Replacing 3-isogenies.");
+print("Using new formulas.");
 t := Cputime();
-A := 0;
+A := change_Mont_model(F!0, 1);
 for i := 1 to N do
-    A := csidh_action_replace_3iso(private[i], A);
+    A := csidh_action_Mont_plus(private[i], A, true);
 end for;
 printf "The time of generating a public key : %o\n\n", Cputime(t);
 
-print("Replacing 4-isogenies.");
+print("Using new formulas (only 4-isogenies).");
 t := Cputime();
-A := 0;
+A := change_Mont_model(F!0, 1);
 for i := 1 to N do
-    A := csidh_action_replace_4iso(private[i], A);
+    A := csidh_action_Mont_plus(private[i], A, false);
 end for;
 printf "The time of generating a public key : %o\n\n", Cputime(t);
